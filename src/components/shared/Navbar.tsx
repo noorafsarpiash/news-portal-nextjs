@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,12 +10,15 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
-import { AiOutlineMenu } from "react-icons/ai";
 
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
+import { usePathname } from "next/navigation";
+import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
+  const pathName = usePathname();
+
   return (
     <header className="py-4 shadow-md">
       <nav className="max-w-7xl mx-auto px-4 flex justify-between items-center sm:px-6 lg:px-8">
@@ -23,7 +28,13 @@ const Navbar = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             <NavigationMenuItem className="flex items-center space-x-8">
-              <NavigationMenuLink href="/news" className="hover:text-red-500">
+              <NavigationMenuLink
+                href="/news"
+                className={`${
+                  pathName === "/news" ? "text-red-500 font-semibold" : ""
+                }
+                hover:text-red-500`}
+              >
                 News
               </NavigationMenuLink>
               <NavigationMenuLink
@@ -54,12 +65,21 @@ const Navbar = () => {
                 </NavigationMenuContent>
               </NavigationMenuLink>
 
-              <NavigationMenuLink href="/about" className="hover:text-red-500">
+              <NavigationMenuLink
+                href="/about"
+                className={`${
+                  pathName === "/about" ? "text-red-500 font-semibold" : ""
+                }
+                hover:text-red-500`}
+              >
                 About
               </NavigationMenuLink>
               <NavigationMenuLink
                 href="/contact"
-                className="hover:text-red-500"
+                className={`${
+                  pathName === "/contact" ? "text-red-500 font-semibold" : ""
+                }
+                hover:text-red-500`}
               >
                 Contact
               </NavigationMenuLink>
@@ -75,11 +95,7 @@ const Navbar = () => {
           <Button variant="default">Login</Button>
         </div>
 
-        <div className="lg:hidden">
-          <Button variant={"outline"}>
-            <AiOutlineMenu size={24} />
-          </Button>
-        </div>
+        <MobileMenu></MobileMenu>
       </nav>
     </header>
   );
